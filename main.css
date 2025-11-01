@@ -1,0 +1,123 @@
+/* ====== Reset & General ====== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #4a5d1f 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ====== Container ====== */
+.container {
+  width: 80%;
+  height: 90%;
+  color: #fff;
+  background: #000000;
+  padding: 40px 35px;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  animation: fadeIn 0.9s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ====== Title ====== */
+h1 {
+  color: #ffffff;
+  margin-bottom: 25px;
+  font-size: 26px;
+}
+
+/* ====== Inputs ====== */
+input {
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0;
+  border: 1px solid #c8b6ff;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+  transition: border 0.3s;
+}
+
+input:focus {
+  border-color: #9e9407;
+  box-shadow: 0 0 6px rgba(197, 230, 11, 0.3);
+}
+
+/* ========== Button ==========*/
+button {
+  width: 100%;
+  padding: 13px;
+  background: #ffffff;
+  color: #000000;
+  font-size: 17px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: rgba(197, 230, 11, 0.3);
+ transform: scale(1.03);
+}
+
+/* ====== Redirect Text ====== */
+.redirect {
+  margin-top: 15px;
+  font-size: 15px;
+}
+
+.redirect a {
+  color: rgba(197, 230, 11, 0.3);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.redirect a:hover {
+  text-decoration: underline;
+}
+
+/*========  Error Message  ======*/
+.error {
+  color: #d62828;
+  font-size: 14px;
+  min-height: 18px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: 95%;
+    height: auto;
+    padding: 25px 20px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  input, button {
+    font-size: 15px;
+    padding: 12px;
+  }
+}
+
