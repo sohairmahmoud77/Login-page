@@ -56,7 +56,8 @@ if (path.includes("register.html")) {
 }
 
 // ---------- LOGIN PAGE ---------------
-if (path.includes("index.html")) {
+if (path.includes("index.html") || path === "/" || path.endsWith("/")) {
+ {
   const loginBtn = document.getElementById("loginBtn");
 
   loginBtn.addEventListener("click", () => {
