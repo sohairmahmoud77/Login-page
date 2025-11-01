@@ -51,13 +51,11 @@ if (path.includes("register.html")) {
     localStorage.setItem("users", JSON.stringify(users));
 
     alert("✅ Registration successful! Redirecting to login...");
-    window.location.href = "login.html";
+    window.location.href = "index.html";
   });
 }
 
 // ---------- LOGIN PAGE ---------------
-
-if (path.includes("index.html")) {
 if (path.includes("index.html")) {
   const loginBtn = document.getElementById("loginBtn");
 
@@ -92,32 +90,22 @@ if (path.includes("index.html")) {
 }
 
 // ===== HOME PAGE =====
-
 if (path.includes("home.html")) {
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
   const welcomeMsg = document.getElementById("welcomeMsg");
   const logoutBtn = document.getElementById("logoutBtn");
 
   // ✅ Block access if not logged in
-
   if (!user) {
     alert("⚠️ You must log in first!");
-
     window.location.href = "index.html";
-
-    window.location.href = "index.html";
- 
   } else {
     welcomeMsg.textContent = `Welcome, ${user.name}!`;
   }
 
   logoutBtn.addEventListener("click", () => {
     localStorage.removeItem("loggedInUser");
-
-    window.location.href = "login.html";
-
     window.location.href = "index.html";
-
   });
 }
 
