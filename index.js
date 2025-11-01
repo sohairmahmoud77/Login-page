@@ -114,7 +114,7 @@ if (path.includes("home.html")) {
   logoutBtn.addEventListener("click", () => {
     localStorage.removeItem("loggedInUser");
 
-    window.location.href = "index.html";
+    window.location.href = "login.html";
 
     window.location.href = "index.html";
 
