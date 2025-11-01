@@ -105,19 +105,19 @@ if (path.includes("home.html")) {
 
     window.location.href = "index.html";
 
-    window.location.href = "index.html";
+   
  
   } else {
     welcomeMsg.textContent = `Welcome, ${user.name}!`;
   }
 
-  logoutBtn.addEventListener("click", () => {
-    localStorage.removeItem("loggedInUser");
+ logoutBtn.addEventListener("click", () => {
+  localStorage.removeItem("loggedInUser"); 
+  window.location.href = "index.html";     
+});
+
+
 
     
 
-    window.location.href = "index.html";
-
-  });
-}
-
+   
