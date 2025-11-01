@@ -59,7 +59,7 @@ if (path.includes("register.html")) {
 }
 
 // ---------- LOGIN PAGE ---------------
-if (path.includes("index.html")  {
+if (path.includes("index.html") ({
   const loginBtn = document.getElementById("loginBtn");
 
   if (loginBtn) {
