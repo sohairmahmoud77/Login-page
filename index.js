@@ -51,15 +51,15 @@ if (path.includes("register.html")) {
     localStorage.setItem("users", JSON.stringify(users));
 
     alert("✅ Registration successful! Redirecting to login...");
-    window.location.href = "index.html";
+    window.location.href = "login.html";
   });
 }
 
 // ---------- LOGIN PAGE ---------------
 
-if (path.includes("index.html") || path === "/" || path.endsWith("/")) {
+if (path.includes("index.html")) {
+if (path.includes("index.html")) {
   const loginBtn = document.getElementById("loginBtn");
-
 
   loginBtn.addEventListener("click", () => {
     const email = document.getElementById("loginEmail").value.trim();
@@ -120,5 +120,3 @@ if (path.includes("home.html")) {
 
   });
 }
-
-
