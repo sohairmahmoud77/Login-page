@@ -68,7 +68,7 @@ if (path.includes("index.html")) {
       const password = document.getElementById("loginPassword").value.trim();
       const errorMsg = document.getElementById("loginError");
 
-      errorMsg.textContent = ""; // Reset message
+      errorMsg.textContent = ""; 
 
       if (!email || !password) {
         errorMsg.textContent = "⚠️ Please fill in all fields!";
@@ -103,8 +103,7 @@ if (path.includes("home.html")) {
   // ✅ Block access if not logged in
   if (!user) {
     alert("⚠️ You must log in first!");
-    window.location.href = "index.html"; // أو login.html حسب اسم صفحتك
-    return;
+    window.location.href = "index.html"; 
   }
 
   // ✅ Display welcome message
@@ -116,7 +115,7 @@ if (path.includes("home.html")) {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       localStorage.removeItem("loggedInUser");
-      window.location.href = "index.html"; // أو login.html
+      window.location.href = "index.html"; 
     });
   }
 }
