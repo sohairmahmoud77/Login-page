@@ -51,7 +51,7 @@ if (path.includes("register.html")) {
     localStorage.setItem("users", JSON.stringify(users));
 
     alert("✅ Registration successful! Redirecting to login...");
-    window.location.href = "login.html";
+    window.location.href = "index.html";
   });
 }
 
@@ -114,7 +114,7 @@ if (path.includes("home.html")) {
   logoutBtn.addEventListener("click", () => {
     localStorage.removeItem("loggedInUser");
 
-    window.location.href = "login.html";
+    
 
     window.location.href = "index.html";
 
