@@ -1,122 +1,141 @@
-// Get current page
-const path = window.location.pathname;
+// Centralized script for login/register/home pages
+// File: index.js
 
-// ===== REGISTER PAGE =====
-if (path.includes("register.html")) {
-  const registerBtn = document.getElementById("registerBtn");
+(function () {
+  const page = document.body.dataset.page || '';
+  const path = window.location.pathname;
 
-  if (registerBtn) {
-    registerBtn.addEventListener("click", () => {
-      const name = document.getElementById("registerName").value.trim();
-      const email = document.getElementById("registerEmail").value.trim();
-      const password = document.getElementById("registerPassword").value.trim();
-      const errorMsg = document.getElementById("registerError");
+  // Utilities
+  const setUsers = (users) => localStorage.setItem('users', JSON.stringify(users));
+  const getUsers = () => JSON.parse(localStorage.getItem('users')) || [];
+  const setLoggedInUser = (user) => localStorage.setItem('loggedInUser', JSON.stringify(user));
+  const getLoggedInUser = () => JSON.parse(localStorage.getItem('loggedInUser'));
+  const removeLoggedInUser = () => localStorage.removeItem('loggedInUser');
 
-      errorMsg.textContent = ""; // Reset message
+  // Simple email regex
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
 
-      // --- Validation checks -----
-      if (!name || !email || !password) {
-        errorMsg.textContent = "⚠️ Please fill in all fields!";
-        return;
-      }
+  // ---------- REGISTER PAGE ----------
+  if (page === 'register' || path.includes('register.html')) {
+    const registerBtn = document.getElementById('registerBtn');
 
-      // Name must be at least 3 chars
-      if (name.length < 3) {
-        errorMsg.textContent = "Name must be at least 3 characters long.";
-        return;
-      }
+    if (registerBtn) {
+      registerBtn.addEventListener('click', () => {
+        const nameEl = document.getElementById('registerName');
+        const emailEl = document.getElementById('registerEmail');
+        const passwordEl = document.getElementById('registerPassword');
+        const errorMsg = document.getElementById('registerError');
 
-      // Email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
-      if (!emailRegex.test(email)) {
-        errorMsg.textContent =
-          "Invalid email format. Example: user@example.com";
-        return;
-      }
+        const name = (nameEl && nameEl.value || '').trim();
+        const email = (emailEl && emailEl.value || '').trim();
+        const password = (passwordEl && passwordEl.value || '').trim();
 
-      // Password validation
-      if (password.length < 6) {
-        errorMsg.textContent = "Password must be at least 6 characters long.";
-        return;
-      }
+        errorMsg.textContent = '';
 
-      let users = JSON.parse(localStorage.getItem("users")) || [];
-      const userExists = users.find((u) => u.email === email);
+        if (!name || !email || !password) {
+          errorMsg.textContent = '⚠️ Please fill in all fields!';
+          return;
+        }
 
-      if (userExists) {
-        errorMsg.textContent =
-          "This email is already registered. Try logging in.";
-        return;
-      }
+        if (name.length < 3) {
+          errorMsg.textContent = 'Name must be at least 3 characters long.';
+          return;
+        }
 
-      users.push({ name, email, password });
-      localStorage.setItem("users", JSON.stringify(users));
+        if (!emailRegex.test(email)) {
+          errorMsg.textContent = 'Invalid email format. Example: user@example.com';
+          return;
+        }
 
-      alert("✅ Registration successful! Redirecting to login...");
-      window.location.href = "index.html"; // لو صفحة تسجيل الدخول اسمها login.html غيّرها هنا
-    });
-  }
-}
+        if (password.length < 6) {
+          errorMsg.textContent = 'Password must be at least 6 characters long.';
+          return;
+        }
 
-// ---------- LOGIN PAGE ---------------
-if (path.includes("index.html")) {
-  const loginBtn = document.getElementById("loginBtn");
+        const users = getUsers();
+        const userExists = users.some(u => u.email.toLowerCase() === email.toLowerCase());
 
-  if (loginBtn) {
-    loginBtn.addEventListener("click", () => {
-      const email = document.getElementById("loginEmail").value.trim();
-      const password = document.getElementById("loginPassword").value.trim();
-      const errorMsg = document.getElementById("loginError");
+        if (userExists) {
+          errorMsg.textContent = 'This email is already registered. Try logging in.';
+          return;
+        }
 
-      errorMsg.textContent = ""; 
+        users.push({ name, email, password });
+        setUsers(users);
 
-      if (!email || !password) {
-        errorMsg.textContent = "⚠️ Please fill in all fields!";
-        return;
-      }
-
-      let users = JSON.parse(localStorage.getItem("users")) || [];
-      const user = users.find((u) => u.email === email);
-
-      if (!user) {
-        errorMsg.textContent = "No account found with this email.";
-        return;
-      }
-
-      if (user.password !== password) {
-        errorMsg.textContent = "Incorrect password. Please try again.";
-        return;
-      }
-
-      localStorage.setItem("loggedInUser", JSON.stringify(user));
-      window.location.href = "home.html";
-    });
-  }
-}
-
-// ===== HOME PAGE =====
-if (path.includes("home.html")) {
-  const user = JSON.parse(localStorage.getItem("loggedInUser"));
-  const welcomeMsg = document.getElementById("welcomeMsg");
-  const logoutBtn = document.getElementById("logoutBtn");
-
-  // ✅ Block access if not logged in
-  if (!user) {
-    alert("⚠️ You must log in first!");
-    window.location.href = "index.html"; 
+        alert('✅ Registration successful! Redirecting to login...');
+        // redirect to login page
+        window.location.href = 'index.html';
+      });
+    }
   }
 
-  // ✅ Display welcome message
-  if (welcomeMsg) {
-    welcomeMsg.textContent = `Welcome, ${user.name}!`;
+  // ---------- LOGIN PAGE ----------
+  if (page === 'login' || path.includes('index.html') || path.includes('login.html') || path === '/' || path.endsWith('/')) {
+    const loginBtn = document.getElementById('loginBtn');
+
+    if (loginBtn) {
+      loginBtn.addEventListener('click', () => {
+        const emailEl = document.getElementById('loginEmail');
+        const passwordEl = document.getElementById('loginPassword');
+        const errorMsg = document.getElementById('loginError');
+
+        const email = (emailEl && emailEl.value || '').trim();
+        const password = (passwordEl && passwordEl.value || '').trim();
+
+        errorMsg.textContent = '';
+
+        if (!email || !password) {
+          errorMsg.textContent = '⚠️ Please fill in all fields!';
+          return;
+        }
+
+        const users = getUsers();
+        const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+
+        if (!user) {
+          errorMsg.textContent = 'No account found with this email.';
+          return;
+        }
+
+        if (user.password !== password) {
+          errorMsg.textContent = 'Incorrect password. Please try again.';
+          return;
+        }
+
+        setLoggedInUser(user);
+        window.location.href = 'home.html';
+      });
+    }
   }
 
-  // ✅ Logout button event
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      localStorage.removeItem("loggedInUser");
-      window.location.href = "index.html"; 
-    });
-  }
-}
+  // ---------- HOME PAGE ----------
+  if (page === 'home' || path.includes('home.html')) {
+    const user = getLoggedInUser();
+    const welcomeMsg = document.getElementById('welcomeMsg');
+    const userEmail = document.getElementById('userEmail');
+    const logoutBtn = document.getElementById('logoutBtn');
 
+    if (!user) {
+      // not logged in -> redirect to login
+      alert('⚠️ You must log in first!');
+      window.location.href = 'index.html';
+      return;
+    }
+
+    if (welcomeMsg) {
+      welcomeMsg.textContent = `Welcome, ${user.name}!`;
+    }
+    if (userEmail) {
+      userEmail.textContent = user.email;
+    }
+
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => {
+        removeLoggedInUser();
+        window.location.href = 'index.html';
+      });
+    }
+  }
+
+})();
